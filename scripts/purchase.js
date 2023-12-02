@@ -1,8 +1,24 @@
+// select inputs
 let sub = document.getElementById("sub");
+let numInput = document.getElementById("num");
+let cardIcon = document.getElementById("cardIcon");
+let cvv = document.getElementById("cvv");
+let successDiv = document.getElementById("success");
+
+// obj with icons locations
+let imagesDict = {
+  Visa: "../assets/visaIcon.png",
+  MasterCard: "../assets/mastercardIcon.png",
+};
+
+// hide divs
+successDiv.style.display = "none";
+cardIcon.style.display = "none";
 
 function luhn(input) {
   /* check cridet card number if it's valid or not
     @input: cridet card number
+    Return: true if valid false otherwise
     */
 
   // replace not allowed chars and put numbeer into array
@@ -38,32 +54,7 @@ function luhn(input) {
 
   //   // if if this a valid card number
   //   if (totalSum % 10 == 0) {
-  //     // check if it's visa card
-  //     if (cridetNumber[0] == 4 && (len == 13 || len == 16)) {
-  //       return [true, "Visa"];
-  //     }
-  //     // check if it's Amirecan express card
-  //     else if (
-  //       len == 15 &&
-  //       Number(cridetNumber[0]) == 3 &&
-  //       (cridetNumber[1] == 4 || cridetNumber[1] == 7)
-  //     )
-  //       return [true, "American Express"];
-  //     // check if it's masterCard
-  //     else if (
-  //       len === 16 &&
-  //       Number(cridetNumber[0]) === 5 &&
-  //       (Number(cridetNumber[1]) === 1 ||
-  //         Number(cridetNumber[1]) === 2 ||
-  //         Number(cridetNumber[1]) === 3 ||
-  //         Number(cridetNumber[1]) === 4 ||
-  //         Number(cridetNumber[1]) === 5)
-  //     ) {
-  //       return [true, "Master Card"];
-  //     } else {
-  //       return [false, "invalid"];
-  //     }
-  //   }
+  //
   //   // if the checksum % 10 isn't equal 0 return false
   //   else {
   //     return [false, "inavalid"];
@@ -75,18 +66,87 @@ function luhn(input) {
   }
 }
 
+function cardName(cardNum) {
+  /* check card number and return it's vendor name
+    @cardNun: cridet Card number
+    Return: Card's vendor name
+     */
+  let notAllowed = "-";
+  let cridetNumber = cardNum
+    .split("")
+    .filter((num) => notAllowed.indexOf(num) < 0);
+
+  len = cridetNumber.length;
+
+  // check if it's visa card
+  if (cridetNumber[0] == 4 && (len == 13 || len == 16)) {
+    return "Visa";
+  }
+  // check if it's Amirecan express card
+  // else if (
+  //   len == 15 &&
+  //   Number(cridetNumber[0]) == 3 &&
+  //   (cridetNumber[1] == 4 || cridetNumber[1] == 7)
+  // )
+  //   return [true, "American Express"];
+  // check if it's masterCard
+  else if (
+    len === 16 &&
+    Number(cridetNumber[0]) === 5 &&
+    (Number(cridetNumber[1]) === 1 ||
+      Number(cridetNumber[1]) === 2 ||
+      Number(cridetNumber[1]) === 3 ||
+      Number(cridetNumber[1]) === 4 ||
+      Number(cridetNumber[1]) === 5)
+  ) {
+    return "MasterCard";
+  } else {
+    return "Invalid";
+  }
+}
+
 sub.addEventListener("click", (e) => {
   e.preventDefault();
   let number = document.getElementById("num").value;
+  // user put valid info
   if (luhn(number)) {
-    console.log("valid");
-  } else {
-    console.log("invalid"); 
+    // make the purchase
+    successDiv.innerText = "Succesfull Purchase, order on your way (':";
+    successDiv.style.backgroundColor = "aquamarine";
+    successDiv.style.display = "block";
   }
-  //   let [bool, cardName] = luhn(number);
-  //   if (bool) {
-  //     console.log(`card name is: ${cardName}`);
-  //   } else {
-  //     console.log(`card num is ${cardName}`);
-  //   }
+});
+
+// add event lisnter in numinput
+numInput.addEventListener("keydown", (e) => {
+  let number = document.getElementById("num").value;
+
+  // make sure user only put numbers
+  if ((e.keyCode < 48 || e.keyCode > 57) && e.keyCode != 8 && !e.ctrlKey) {
+    e.preventDefault();
+  }
+  // if it's a valid input
+  if (luhn(number)) {
+    // display the corsponding icon
+    if (cardName(number) == "Visa") {
+      cardIcon.src = imagesDict["Visa"];
+    } else if (cardName(number) == "MasterCard") {
+      cardIcon.src = imagesDict["MasterCard"];
+    }
+  } else {
+    cardIcon.alt = "Please enter visa or masterCard";
+  }
+  // display icon beside inline with input field
+  cardIcon.style.display = "inline";
+});
+
+cvv.addEventListener("keydown", (e) => {
+  // make sure user enter only 3 numbers in cvv field
+  let input = document.getElementById("cvv").value;
+  if (
+    (input.length >= 3 || e.keyCode < 48 || e.keyCode > 57) &&
+    e.keyCode != 8
+  ) {
+    e.preventDefault();
+  }
 });

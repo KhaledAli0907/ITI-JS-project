@@ -1,13 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Purchase</title>
     <script src="../scripts/purchase.js" defer></script>
-</head>
-<body>
-    <input type="text" id="num">
-    <input type="submit" value="click" id="sub">
-</body>
+    <style>
+    </style>
+  </head>
+  <body>
+    <div id="success"></div>
+    <form method="post">
+      <label for="cardHolder">Name On Card: </label>
+      <input type="text" name="cardHolder" />
+      <br />
+      <label for="cardNum">Card Number: </label>
+      <input type="text" name="cardNum" id="num" />
+      <span
+        ><img src="" alt="cardIcon" id="cardIcon" style="width: 30px;"
+      /></span>
+      <br />
+      <label for="cvv">CVV: </label>
+      <input type="text" name="cvv" id="cvv"/>
+      <br />
+      <input type="submit" value="click" id="sub" />
+    </form>
+  </body>
 </html>
