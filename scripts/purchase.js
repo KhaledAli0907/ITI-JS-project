@@ -52,13 +52,6 @@ function luhn(input) {
   let otherSum = otherNums.reduce((p, c) => (p += c));
   let totalSum = firstSum + otherSum;
 
-  //   // if if this a valid card number
-  //   if (totalSum % 10 == 0) {
-  //
-  //   // if the checksum % 10 isn't equal 0 return false
-  //   else {
-  //     return [false, "inavalid"];
-  //   }
   if (totalSum % 10 == 0) {
     return true;
   } else {
@@ -111,8 +104,12 @@ sub.addEventListener("click", (e) => {
   // user put valid info
   if (luhn(number)) {
     // make the purchase
-    successDiv.innerText = "Succesfull Purchase, order on your way (':";
+    successDiv.innerText = "Successful Purchase, order on your way (:";
     successDiv.style.backgroundColor = "aquamarine";
+    successDiv.style.display = "block";
+  } else {
+    successDiv.innerText = "Faild please re-enter info";
+    successDiv.style.backgroundColor = "red";
     successDiv.style.display = "block";
   }
 });
@@ -121,6 +118,7 @@ sub.addEventListener("click", (e) => {
 numInput.addEventListener("keydown", (e) => {
   let number = document.getElementById("num").value;
 
+  console.log(e);
   // make sure user only put numbers
   if ((e.keyCode < 48 || e.keyCode > 57) && e.keyCode != 8 && !e.ctrlKey) {
     e.preventDefault();
