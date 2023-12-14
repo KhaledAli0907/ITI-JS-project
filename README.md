@@ -1,1 +1,2 @@
-ITI project for HTMl, CSS, And JavaScript Course
+ITI project for HTML, CSS ,And JavaScript 
+MadeBy @khaledali0907 @mohamedkhaled @toaaHatem
